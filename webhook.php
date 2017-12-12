@@ -42,8 +42,13 @@ function processMessage($update)
       ));
       break;
     case "ask.notes":
-      $rows = $_DATABASE->query("SELECT * FROM note WHERE IdPatient = ? LIMIT ?",
-        array(1, 1));
+      $count = 1;
+      if(!empty($update['result']['parameters']['number'])) {
+        $count = $update['result']['parameters']['number'];
+      }
+
+      $rows = $_DATABASE->query("SELECT * FROM note WHERE IdPatient = ? ORDER BY timestamp DESC LIMIT ?",
+        array(1, $count));
       $note = "There is no note here";
       if(!empty($rows[0])) {
         $note = $rows[0]["data"];
