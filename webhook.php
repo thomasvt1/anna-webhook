@@ -42,16 +42,19 @@ function processMessage($update)
       ));
       break;
     case "ask.notes":
-      $count = $update['result']['parameters']['number'];
+      if(!empty($update['result']['parameters']['number'])) {
+        $count = $update['result']['parameters']['number'];
+      } else {
+        $count = 1;
+      }
       $patient = $update['result']['parameters']['patient'];
 
       $rows = $_DATABASE->query("SELECT * FROM note WHERE IdPatient = ? LIMIT ?",
         array(1, $count));
 
+      $note = "Note should be here.";
       if(!empty($rows[0])) {
-        $note = $rows[0]["note"] + 1;
-      } else {
-        $note = $rows["note"];
+        $note = $rows[0]["note"];
       }
 
       sendMessage(array(
