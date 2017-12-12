@@ -48,9 +48,12 @@ function processMessage($update)
       $rows = $_DATABASE->query("SELECT * FROM note WHERE IdPatient = ? LIMIT ?",
         array(1, $count));
 
-      echo var_dump($rows);
-
-      break;
+      sendMessage(array(
+        "source" => $update["result"]["source"],
+        "speech" => $rows,
+        "displayText" => $rows,
+        "contextOut" => array()
+      ));
   }
 }
 
