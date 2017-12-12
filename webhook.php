@@ -55,8 +55,8 @@ function processMessage($update)
 
       sendMessage(array(
         "source" => $update["result"]["source"],
-        "speech" => $note,
-        "displayText" => $note,
+        "speech" => "NOTE HERE",
+        "displayText" => "NOTE HERE",
         "contextOut" => array()
       ));
       break;
