@@ -49,17 +49,30 @@ function processMessage($update)
 
       $rows = $_DATABASE->query("SELECT * FROM note WHERE IdPatient = ? ORDER BY timestamp DESC LIMIT ?",
         array(1, $count));
-      $note = "There is no note here";
-      if(!empty($rows[0])) {
-        $note = $rows[0]["data"];
-      }
 
-      sendMessage(array(
-        "source" => $update["result"]["source"],
-        "speech" => $note,
-        "displayText" => $note,
-        "contextOut" => array()
-      ));
+      if($count > 1) {
+        $speech = "";
+        foreach (range(0, --$count) as $i) {
+          $speech = $speech." Note ".++$i.". ".$rows[--$i].".";
+        }
+        sendMessage(array(
+          "source" => $update["result"]["source"],
+          "speech" => $speech,
+          "displayText" => $speech,
+          "contextOut" => array()
+        ));
+      } else {
+        $note = "Sorry, no notes were found";
+        if(!empty($rows[0])) {
+          $note = $rows[0]["data"];
+        }
+        sendMessage(array(
+          "source" => $update["result"]["source"],
+          "speech" => $note,
+          "displayText" => $note,
+          "contextOut" => array()
+        ));
+      }
       break;
   }
 }
