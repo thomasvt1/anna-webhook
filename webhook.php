@@ -23,6 +23,12 @@ function processMessage($update)
       "contextOut" => array()
     ));
   }
+
+  if($update["result"]["action"] == "make.note") {
+    $myFile = fopen("debug.txt", "w") or die("Unable to open file!");
+    fwrite($myFile, "Successfully made a note.");
+    fclose($myFile);
+  }
 }
 
 /**
