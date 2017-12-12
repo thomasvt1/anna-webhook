@@ -1,4 +1,13 @@
 <?php
+
+require_once "config.php";
+require_once "Database.php";
+
+// Require the configuration
+global $_CONFIG;
+// Connect to the database
+$_DATABASE = new Database($_CONFIG["host"], $_CONFIG["database"], $_CONFIG["user"], $_CONFIG["password"]);
+
 /**
  * Processes the message requested
  *
@@ -29,6 +38,8 @@ function processMessage($update)
     $note = $update['result']['parameters']['note'];
     $patient = $update['result']['parameters']['patient'];
 
+
+
     sendMessage(array(
       "source" => $update["result"]["source"],
       "speech" => "Ok, your note for ".$patient." has been saved.",
@@ -54,3 +65,6 @@ $update = json_decode($update_response, true);
 if (isset($update["result"]["action"])) {
   processMessage($update);
 }
+
+// Disconnect from the database
+$_DATABASE->disconnect();
