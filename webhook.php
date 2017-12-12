@@ -39,8 +39,8 @@ function processMessage($update)
     $note = $update['result']['parameters']['note'];
     $patient = $update['result']['parameters']['patient'];
 
-    $_DATABASE->query("INSERT INTO note(IdNote, IdCaretaker, IdPatient, data, timestamp) VALUES(?, ?, ?, ?, ?)",
-      array(1, 1, 1, json_encode($note), "2017-12-12 11:14:00"));
+    $_DATABASE->query("INSERT INTO note(IdCaretaker, IdPatient, data, timestamp) VALUES(?, ?, ?, ?, ?)",
+      array(1, 1, json_encode($note), CURRENT_TIMESTAMP));
 
     sendMessage(array(
       "source" => $update["result"]["source"],
