@@ -25,9 +25,7 @@ function processMessage($update)
   }
 
   if($update["result"]["action"] == "make.note") {
-    $myFile = fopen("debug.txt", "w") or die("Unable to open file!");
-    fwrite($myFile, "Successfully made a note.");
-    fclose($myFile);
+    // Need to write note to the database, and send the caretaker a confirmation or fail
   }
 }
 
@@ -43,7 +41,6 @@ function sendMessage($parameters)
 
 // Things starts here
 $update_response = file_get_contents("php://input");
-//$update_response = $_POST;
 $update = json_decode($update_response, true);
 if (isset($update["result"]["action"])) {
   processMessage($update);
