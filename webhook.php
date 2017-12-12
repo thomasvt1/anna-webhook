@@ -53,7 +53,7 @@ function processMessage($update)
       if($count > 1) {
         $speech = "";
         foreach (range(0, --$count) as $i) {
-          $speech = $speech." Note ".++$i.". ".$rows[--$i].".";
+          $speech = $speech." Note ".++$i.". ".$rows[--$i]["data"].".";
         }
         sendMessage(array(
           "source" => $update["result"]["source"],
