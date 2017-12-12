@@ -21,33 +21,28 @@ function processMessage($update)
   ob_start();
   var_dump($update);
   $result = ob_get_clean();
-
   fwrite($myFile, $result);
   fclose($myFile);
-  if ($update["result"]["action"] == "sayHello") {
-    $name = $update['result']['parameters']['given-name'];
-    sendMessage(array(
-      "source" => $update["result"]["source"],
-      "speech" => "Hello " . $name,
-      "displayText" => "Hello " . $name,
-      "contextOut" => array()
-    ));
-  }
 
-  if($update["result"]["action"] == "make.note") {
-    // Need to write note to the database, and send the caretaker a confirmation or fail
-    $note = $update['result']['parameters']['note'];
-    $patient = $update['result']['parameters']['patient'];
+  // Switch the action
+  switch ($update["result"]["action"]) {
+    case "make.note";
+      // Need to write note to the database, and send the caretaker a confirmation or fail
+      $note = $update['result']['parameters']['note'];
+      $patient = $update['result']['parameters']['patient'];
 
-    $_DATABASE->query("INSERT INTO note(IdCaretaker, IdPatient, data, timestamp) VALUES(?, ?, ?, CURRENT_TIMESTAMP)",
-      array(1, 1, json_encode($note)));
+      $_DATABASE->query("INSERT INTO note(IdCaretaker, IdPatient, data, timestamp) VALUES(?, ?, ?, CURRENT_TIMESTAMP)",
+        array(1, 1, json_encode($note)));
 
-    sendMessage(array(
-      "source" => $update["result"]["source"],
-      "speech" => "Ok, your note for ".$patient." has been saved.",
-      "displayText" => "Ok, your note for ".$patient." has been saved.",
-      "contextOut" => array()
-    ));
+      sendMessage(array(
+        "source" => $update["result"]["source"],
+        "speech" => "Ok, your note for ".$patient." has been saved.",
+        "displayText" => "Ok, your note for ".$patient." has been saved.",
+        "contextOut" => array()
+      ));
+      break;
+    case "ask.notes":
+      break;
   }
 }
 
