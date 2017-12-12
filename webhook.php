@@ -1,30 +1,43 @@
 <?php
-function processMessage($update) {
-$myfile = fopen("debug.txt", "w") or die("Unable to open file!");
-ob_start();
-var_dump($update);
-$result = ob_get_clean();
+/**
+ * Processes the message requested
+ *
+ * @param $update
+ */
+function processMessage($update)
+{
+  // Open debug file, to write the request to
+  $myFile = fopen("debug.txt", "w") or die("Unable to open file!");
+  ob_start();
+  var_dump($update);
+  $result = ob_get_clean();
 
-    fwrite($myfile, $result);
-    fclose($myfile);
-    if($update["result"]["action"] == "sayHello"){
-	$name = $update['result']['parameters']['given-name'];
-        sendMessage(array(
-            "source" => $update["result"]["source"],
-            "speech" => "Hello " . $name,
-            "displayText" => "Hello " . $name,
-            "contextOut" => array()
-        ));
-    }
+  fwrite($myFile, $result);
+  fclose($myFile);
+  if ($update["result"]["action"] == "sayHello") {
+    $name = $update['result']['parameters']['given-name'];
+    sendMessage(array(
+      "source" => $update["result"]["source"],
+      "speech" => "Hello " . $name,
+      "displayText" => "Hello " . $name,
+      "contextOut" => array()
+    ));
+  }
 }
 
-function sendMessage($parameters) {
-    echo json_encode($parameters);
+/**
+ * Encodes the parameters given, and echoes them
+ *
+ * @param $parameters
+ */
+function sendMessage($parameters)
+{
+  echo json_encode($parameters);
 }
 
+// Things starts here
 $update_response = file_get_contents("php://input");
 $update = json_decode($update_response, true);
 if (isset($update["result"]["action"])) {
-    processMessage($update);
+  processMessage($update);
 }
-?>
