@@ -42,10 +42,17 @@ function processMessage($update)
       ));
       break;
     case "ask.notes":
+      $rows = $_DATABASE->query("SELECT * FROM note WHERE IdPatient = ? LIMIT ?",
+        array(1, 1));
+      $note = "There is no note here";
+      if(!empty($rows[0])) {
+        $note = $rows[0]["data"];
+      }
+
       sendMessage(array(
         "source" => $update["result"]["source"],
-        "speech" => "Last notes are...",
-        "displayText" => "Last notes are...",
+        "speech" => $note,
+        "displayText" => $note,
         "contextOut" => array()
       ));
       break;
