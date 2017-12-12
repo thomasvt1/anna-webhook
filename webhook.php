@@ -15,6 +15,7 @@ $_DATABASE = new Database($_CONFIG["host"], $_CONFIG["database"], $_CONFIG["user
  */
 function processMessage($update)
 {
+  global $_DATABASE;
   // Open debug file, to write the request to
   $myFile = fopen("debug.txt", "w") or die("Unable to open file!");
   ob_start();
@@ -38,7 +39,8 @@ function processMessage($update)
     $note = $update['result']['parameters']['note'];
     $patient = $update['result']['parameters']['patient'];
 
-
+    $_DATABASE->query("INSERT INTO note(IdNote, IdCaretaker, IdPatient, data, timestamp) VALUES(?, ?, ?, ?, ?)",
+      array(1, 1, 1, json_encode($note), "2017-12-12 11:14:00"));
 
     sendMessage(array(
       "source" => $update["result"]["source"],
