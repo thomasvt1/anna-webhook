@@ -48,7 +48,7 @@ function processMessage($update)
       $rows = $_DATABASE->query("SELECT * FROM note WHERE IdPatient = ? LIMIT ?",
         array(1, $count));
 
-      echo var_dump(json_decode($rows));
+      var_dump($rows);
   }
 }
 
