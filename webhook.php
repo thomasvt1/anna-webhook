@@ -42,6 +42,14 @@ function processMessage($update)
       ));
       break;
     case "ask.notes":
+      $count = $update['result']['parameters']['number'];
+      $patient = $update['result']['parameters']['patient'];
+
+      $rows = $_DATABASE->query("SELECT * FROM note WHERE IdPatient = ? LIMIT ?",
+        array(1, $count));
+
+      echo var_dump($rows);
+
       break;
   }
 }
