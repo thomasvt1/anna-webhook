@@ -26,6 +26,15 @@ function processMessage($update)
 
   if($update["result"]["action"] == "make.note") {
     // Need to write note to the database, and send the caretaker a confirmation or fail
+    $note = $update['result']['parameters']['note'];
+    $patient = $update['result']['parameters']['patient'];
+
+    sendMessage(array(
+      "source" => $update["result"]["source"],
+      "speech" => "Ok, your note for ".$patient." has been saved.",
+      "displayText" => "Ok, your note for ".$patient." has been saved.",
+      "contextOut" => array()
+    ));
   }
 }
 
