@@ -44,8 +44,8 @@ function processMessage($update)
     case "ask.notes":
       sendMessage(array(
         "source" => $update["result"]["source"],
-        "speech" => json_encode($update),
-        "displayText" => json_encode($update),
+        "speech" => "Last notes are...",
+        "displayText" => "Last notes are...",
         "contextOut" => array()
       ));
       break;
