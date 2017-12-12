@@ -37,6 +37,7 @@ function sendMessage($parameters)
 
 // Things starts here
 $update_response = file_get_contents("php://input");
+$update_response = $_POST;
 $update = json_decode($update_response, true);
 if (isset($update["result"]["action"])) {
   processMessage($update);
