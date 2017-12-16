@@ -26,7 +26,7 @@ function processMessage($update)
 
   // Switch the action
   switch ($update["result"]["action"]) {
-	case "welcome.hello";
+    case "welcome.hello";
       // Need to get the caretaker name
 	  $userid = $update['data']['user']['userId'];
 
