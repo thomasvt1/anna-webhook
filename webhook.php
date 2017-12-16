@@ -33,8 +33,13 @@ function processMessage($update)
 	  $rows = $_DATABASE->query("SELECT `Firstname` FROM `caretaker` WHERE `userId` LIKE '?' LIMIT 1",
         array($userid));
 
-	  file_put_contents("hello.txt", $userid);
-	  file_put_contents("hello.txt", $rows);
+	  $file = 'people.txt';
+	  // Open the file to get existing content
+	  $current = file_get_contents($file);
+	  // Append a new person to the file
+	  $current .= $rows;
+	  // Write the contents back to the file
+	  file_put_contents($file, $current);
 
 	  $name = $rows[0];
 
