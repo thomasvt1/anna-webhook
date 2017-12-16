@@ -30,8 +30,10 @@ function processMessage($update)
       // Need to get the caretaker name
 	  $userid = $update['data']['user']['userId'];
 
-	  $name = $_DATABASE->query("SELECT `Firstname` FROM `caretaker` WHERE `userId` LIKE '?' LIMIT 1",
+	  $rows = $_DATABASE->query("SELECT `Firstname` FROM `caretaker` WHERE `userId` LIKE '?' LIMIT 1",
         array($userid));
+
+	  $name = $rows[0];
 
       sendMessage(array(
         "source" => $update["result"]["source"],
