@@ -33,6 +33,9 @@ function processMessage($update)
 	  $rows = $_DATABASE->query("SELECT `Firstname` FROM `caretaker` WHERE `userId` LIKE '?' LIMIT 1",
         array($userid));
 
+	  file_put_contents("hello.txt", $userid);
+	  file_put_contents("hello.txt", $rows);
+
 	  $name = $rows[0];
 
       sendMessage(array(
