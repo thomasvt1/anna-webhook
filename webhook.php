@@ -30,14 +30,14 @@ function processMessage($update)
       // Need to get the caretaker name
 	  $userid = $update['originalRequest']['data']['user']['userId'];
 
-	  $rows = $_DATABASE->query("SELECT `firstname` FROM `caretaker` WHERE `userId` LIKE '?' LIMIT 1",
+	  $rows = $_DATABASE->query("SELECT `firstname` FROM `caretaker` WHERE `userId` LIKE ? LIMIT 1",
         array($userid));
 
 	  $file = 'people.txt';
 	  // Open the file to get existing content
 	  $current = file_get_contents($file);
 	  // Append a new person to the file
-	  $current .= $rows;
+	  $current .= $rows[0] . "\n";;
 	  // Write the contents back to the file
 	  file_put_contents($file, $current);
 
