@@ -28,7 +28,7 @@ function processMessage($update)
   switch ($update["result"]["action"]) {
     case "welcome.hello";
       // Need to get the caretaker name
-	  $userid = $update['data']['user']['userId'];
+	  $userid = $update['originalRequest']['data']['user']['userId'];
 
 	  $rows = $_DATABASE->query("SELECT `Firstname` FROM `caretaker` WHERE `userId` LIKE '?' LIMIT 1",
         array($userid));
@@ -46,7 +46,7 @@ function processMessage($update)
       sendMessage(array(
         "source" => $update["result"]["source"],
         "speech" => "Hi, ".$name.", I'm miss Anna. Who are we helping today?",
-        "displayText" => "Hi ".$userid.", I'm miss Anna. Who are we helping today?",
+        "displayText" => "Hi ".$name.", I'm miss Anna. Who are we helping today?",
         "contextOut" => array()
       ));
       break;
