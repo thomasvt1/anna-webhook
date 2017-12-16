@@ -26,6 +26,16 @@ function processMessage($update)
 
   // Switch the action
   switch ($update["result"]["action"]) {
+	case "welcome.hello";
+      // Need to get the caretaker name
+
+      sendMessage(array(
+        "source" => $update["result"]["source"],
+        "speech" => "Hi name, I'm miss Anna. Who are we helping today?",
+        "displayText" => "Hi name, I'm miss Anna. Who are we helping today?",
+        "contextOut" => array()
+      ));
+      break;
     case "make.note";
       // Need to write note to the database, and send the caretaker a confirmation or fail
       $note = $update['result']['parameters']['note'];
