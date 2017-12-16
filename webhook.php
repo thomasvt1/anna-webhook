@@ -36,8 +36,8 @@ function processMessage($update)
 
       sendMessage(array(
         "source" => $update["result"]["source"],
-        "speech" => "Ok, your note for ".$patient." has been saved.",
-        "displayText" => "Ok, your note for ".$patient." has been saved.",
+        "speech" => "Ok, your note: ".$note." for ".$patient." has been saved.",
+        "displayText" => "Ok, your note: ".$note." for ".$patient." has been saved.",
         "contextOut" => array()
       ));
       break;
