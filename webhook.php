@@ -38,7 +38,7 @@ function processMessage($update)
       sendMessage(array(
         "source" => $update["queryResult"]["source"],
         "speech" => "Hi, ".$name.", I'm miss Anna. Who are we helping today?",
-        "displayText" => "Hi ".$name.", I'm miss Anna. Who are we helping today?",
+        "fulfillmentText" => "Hi ".$name.", I'm miss Anna. Who are we helping today?",
         "contextOut" => array()
       ));
       break;
