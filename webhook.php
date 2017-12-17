@@ -28,6 +28,14 @@ function processMessage($update)
   switch ($update["queryResult"]["action"]) {
     case "welcome.hello";
       // Need to get the caretaker name
+		  
+          $file = 'welcome.txt';
+	  // Open the file to get existing content
+	  $current = file_get_contents($file);
+	  // Append a new person to the file
+	  $current .= "New welcome request \n";;
+	  // Write the contents back to the file
+	  file_put_contents($file, $current);
 	  $userid = $update['originalRequest']['data']['user']['userId'];
 
 	  $rows = $_DATABASE->query("SELECT `firstname` FROM `caretaker` WHERE `userId` LIKE ? LIMIT 1",
