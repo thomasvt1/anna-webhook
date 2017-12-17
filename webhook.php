@@ -16,13 +16,6 @@ $_DATABASE = new Database($_CONFIG["host"], $_CONFIG["database"], $_CONFIG["user
 function processMessage($update)
 {
   global $_DATABASE;
-  // Open debug file, to write the request to
-  $myFile = fopen("debug.txt", "w") or die("Unable to open file!");
-  ob_start();
-  var_dump($update);
-  $result = ob_get_clean();
-  fwrite($myFile, $result);
-  fclose($myFile);
 
   // Switch the action
   switch ($update["result"]["action"]) {
@@ -106,6 +99,15 @@ function sendMessage($parameters)
 // Things starts here
 $update_response = file_get_contents("php://input");
 $update = json_decode($update_response, true);
+
+// Open debug file, to write the request to
+$myFile = fopen("debug.txt", "w") or die("Unable to open file!");
+ob_start();
+var_dump($update);
+$result = ob_get_clean();
+fwrite($myFile, $result);
+fclose($myFile);
+
 if (isset($update["result"]["action"])) {
   processMessage($update);
 }
