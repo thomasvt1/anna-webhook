@@ -106,6 +106,15 @@ function sendMessage($parameters)
 // Things starts here
 $update_response = file_get_contents("php://input");
 $update = json_decode($update_response, true);
+
+$myFile = fopen("input.txt", "w") or die("Unable to open file!");
+ob_start();
+var_dump($update_response);
+$result = ob_get_clean();
+fwrite($myFile, $result);
+fclose($myFile);
+
+
 if (isset($update["result"]["action"])) {
   processMessage($update);
 }
