@@ -25,17 +25,9 @@ function processMessage($update)
   fclose($myFile);
 
   // Switch the action
-  switch ($update["queryResult"]["action"]) {
+  switch ($update["result"]["action"]) {
     case "welcome.hello";
       // Need to get the caretaker name
-		  
-          $file = 'welcome.txt';
-	  // Open the file to get existing content
-	  $current = file_get_contents($file);
-	  // Append a new person to the file
-	  $current .= "New welcome request \n";;
-	  // Write the contents back to the file
-	  file_put_contents($file, $current);
 	  $userid = $update['originalRequest']['data']['user']['userId'];
 
 	  $rows = $_DATABASE->query("SELECT `firstname` FROM `caretaker` WHERE `userId` LIKE ? LIMIT 1",
@@ -44,7 +36,7 @@ function processMessage($update)
 	  $name = $rows[0]["firstname"];
 
       sendMessage(array(
-        "source" => $update["queryResult"]["source"],
+        "source" => $update["result"]["source"],
         "speech" => "Hi, ".$name.", I'm miss Anna. Who are we helping today?",
         "displayText" => "Hi ".$name.", I'm miss Anna. Who are we helping today?",
         "contextOut" => array()
@@ -52,14 +44,14 @@ function processMessage($update)
       break;
     case "make.note";
       // Need to write note to the database, and send the caretaker a confirmation or fail
-      $note = $update['queryResult']['parameters']['note'];
-      $patient = $update['queryResult']['parameters']['patient'];
+      $note = $update['result']['parameters']['note'];
+      $patient = $update['result']['parameters']['patient'];
 
       $_DATABASE->query("INSERT INTO note(IdCaretaker, IdPatient, data, timestamp) VALUES(?, ?, ?, CURRENT_TIMESTAMP)",
         array(1, 1, json_encode($note)));
 
       sendMessage(array(
-        "source" => $update["queryResult"]["source"],
+        "source" => $update["result"]["source"],
         "speech" => "Ok, your note. ".$note." for ".$patient." has been saved.",
         "displayText" => "Ok, your note: '".$note."' for ".$patient." has been saved.",
         "contextOut" => array()
@@ -67,8 +59,8 @@ function processMessage($update)
       break;
     case "ask.notes":
       $count = 1;
-      if(!empty($update['queryResult']['parameters']['number'])) {
-        $count = $update['queryResult']['parameters']['number'];
+      if(!empty($update['result']['parameters']['number'])) {
+        $count = $update['result']['parameters']['number'];
       }
 
       $rows = $_DATABASE->query("SELECT * FROM note WHERE IdPatient = ? ORDER BY timestamp DESC LIMIT ?",
@@ -80,7 +72,7 @@ function processMessage($update)
           $speech = $speech." Note ".++$i.". ".$rows[--$i]["data"].".";
         }
         sendMessage(array(
-          "source" => $update["queryResult"]["source"],
+          "source" => $update["result"]["source"],
           "speech" => $speech,
           "displayText" => $speech,
           "contextOut" => array()
@@ -91,7 +83,7 @@ function processMessage($update)
           $note = $rows[0]["data"];
         }
         sendMessage(array(
-          "source" => $update["queryResult"]["source"],
+          "source" => $update["result"]["source"],
           "speech" => $note,
           "displayText" => $note,
           "contextOut" => array()
@@ -114,16 +106,7 @@ function sendMessage($parameters)
 // Things starts here
 $update_response = file_get_contents("php://input");
 $update = json_decode($update_response, true);
-
-$myFile = fopen("input.txt", "w") or die("Unable to open file!");
-ob_start();
-var_dump($update_response);
-$result = ob_get_clean();
-fwrite($myFile, $result);
-fclose($myFile);
-
-
-if (isset($update["queryResult"]["action"])) {
+if (isset($update["result"]["action"])) {
   processMessage($update);
 }
 
