@@ -25,7 +25,7 @@ function processMessage($update)
   fclose($myFile);
 
   // Switch the action
-  switch ($update["result"]["action"]) {
+  switch ($update["queryResult"]["action"]) {
     case "welcome.hello";
       // Need to get the caretaker name
 	  $userid = $update['originalRequest']['data']['user']['userId'];
@@ -36,7 +36,7 @@ function processMessage($update)
 	  $name = $rows[0]["firstname"];
 
       sendMessage(array(
-        "source" => $update["result"]["source"],
+        "source" => $update["queryResult"]["source"],
         "speech" => "Hi, ".$name.", I'm miss Anna. Who are we helping today?",
         "displayText" => "Hi ".$name.", I'm miss Anna. Who are we helping today?",
         "contextOut" => array()
@@ -44,14 +44,14 @@ function processMessage($update)
       break;
     case "make.note";
       // Need to write note to the database, and send the caretaker a confirmation or fail
-      $note = $update['result']['parameters']['note'];
-      $patient = $update['result']['parameters']['patient'];
+      $note = $update['queryResult']['parameters']['note'];
+      $patient = $update['queryResult']['parameters']['patient'];
 
       $_DATABASE->query("INSERT INTO note(IdCaretaker, IdPatient, data, timestamp) VALUES(?, ?, ?, CURRENT_TIMESTAMP)",
         array(1, 1, json_encode($note)));
 
       sendMessage(array(
-        "source" => $update["result"]["source"],
+        "source" => $update["queryResult"]["source"],
         "speech" => "Ok, your note. ".$note." for ".$patient." has been saved.",
         "displayText" => "Ok, your note: '".$note."' for ".$patient." has been saved.",
         "contextOut" => array()
@@ -59,8 +59,8 @@ function processMessage($update)
       break;
     case "ask.notes":
       $count = 1;
-      if(!empty($update['result']['parameters']['number'])) {
-        $count = $update['result']['parameters']['number'];
+      if(!empty($update['queryResult']['parameters']['number'])) {
+        $count = $update['queryResult']['parameters']['number'];
       }
 
       $rows = $_DATABASE->query("SELECT * FROM note WHERE IdPatient = ? ORDER BY timestamp DESC LIMIT ?",
@@ -72,7 +72,7 @@ function processMessage($update)
           $speech = $speech." Note ".++$i.". ".$rows[--$i]["data"].".";
         }
         sendMessage(array(
-          "source" => $update["result"]["source"],
+          "source" => $update["queryResult"]["source"],
           "speech" => $speech,
           "displayText" => $speech,
           "contextOut" => array()
@@ -83,7 +83,7 @@ function processMessage($update)
           $note = $rows[0]["data"];
         }
         sendMessage(array(
-          "source" => $update["result"]["source"],
+          "source" => $update["queryResult"]["source"],
           "speech" => $note,
           "displayText" => $note,
           "contextOut" => array()
