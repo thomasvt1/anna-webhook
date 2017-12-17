@@ -115,7 +115,7 @@ fwrite($myFile, $result);
 fclose($myFile);
 
 
-if (isset($update["result"]["action"])) {
+if (isset($update["queryResult"]["action"])) {
   processMessage($update);
 }
 
