@@ -75,7 +75,8 @@ class Database {
       $this->succes = $this->query->execute();
       $this->queryCount++;
     } catch (PDOException $e) {
-      // TODO: Print exception
+      // Throw the exception, maybe add logging functionality
+      throw new PDOException($e);
     }
     $this->parameters = array();
   }
