@@ -1,6 +1,7 @@
 <?php
 
-class Database {
+class Database
+{
 
   private $pdo;
   private $settings = [
@@ -19,17 +20,19 @@ class Database {
   public $columnCount = 0;
 
 
-  public function __construct($host = null, $database = null, $user = null, $password = null, $port = 3306) {
-    if($host != null) $this->settings["host"] = $host;
-    if($database!= null) $this->settings["database"] = $database;
-    if($user != null) $this->settings["user"] = $user;
-    if($password != null) $this->settings["password"] = $password;
-    if($port != null) $this->settings["port"] = $port;
+  public function __construct($host = null, $database = null, $user = null, $password = null, $port = 3306)
+  {
+    if ($host != null) $this->settings["host"] = $host;
+    if ($database != null) $this->settings["database"] = $database;
+    if ($user != null) $this->settings["user"] = $user;
+    if ($password != null) $this->settings["password"] = $password;
+    if ($port != null) $this->settings["port"] = $port;
     $this->connect();
     $this->parameters = array();
   }
 
-  private function connect() {
+  private function connect()
+  {
     try {
       $this->pdo = new PDO("mysql:host=" . $this->settings["host"] . ";port=" . $this->settings["port"] . ";dbname=" . $this->settings["database"] . ";charset=utf8",
         $this->settings["user"],
@@ -49,11 +52,13 @@ class Database {
     }
   }
 
-  public function disconnect() {
+  public function disconnect()
+  {
     $this->pdo = null;
   }
 
-  private function init($query, $parameters = "") {
+  private function init($query, $parameters = "")
+  {
     if (!$this->connected) {
       $this->Connect();
     }
@@ -81,7 +86,8 @@ class Database {
     $this->parameters = array();
   }
 
-  private function createParameters($query, $parameters = null) {
+  private function createParameters($query, $parameters = null)
+  {
     if (!empty($parameters)) {
       $statement = explode(" ", $query);
       foreach ($statement as $value) {
@@ -93,7 +99,8 @@ class Database {
     return $query;
   }
 
-  public function query($query, $parameters = null, $fetchMode = PDO::FETCH_ASSOC) {
+  public function query($query, $parameters = null, $fetchMode = PDO::FETCH_ASSOC)
+  {
     $query = trim($query);
     $statement = explode(" ", $query);
     $this->init($query, $parameters);
@@ -107,11 +114,13 @@ class Database {
     }
   }
 
-  public function lastInsertId() {
+  public function lastInsertId()
+  {
     return $this->pdo->lastInsertId();
   }
 
-  public function column($query, $parameters = null) {
+  public function column($query, $parameters = null)
+  {
     $this->init($query, $parameters);
     $resultColumn = $this->query->fetchAll(PDO::FETCH_COLUMN);
     $this->rowCount = $this->query->rowCount();
@@ -120,7 +129,8 @@ class Database {
     return $resultColumn;
   }
 
-  public function row($query, $parameters = null, $fetchMode = PDO::FETCH_ASSOC) {
+  public function row($query, $parameters = null, $fetchMode = PDO::FETCH_ASSOC)
+  {
     $this->init($query, $parameters);
     $resultRow = $this->query->fetch($fetchMode);
     $this->rowCount = $this->query->rowCount();
@@ -129,7 +139,8 @@ class Database {
     return $resultRow;
   }
 
-  public function single($query, $parameters = null) {
+  public function single($query, $parameters = null)
+  {
     $this->init($query, $parameters);
     return $this->query->fetchColumn();
   }

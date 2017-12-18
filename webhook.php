@@ -21,17 +21,17 @@ function processMessage($update)
   switch ($update["result"]["action"]) {
     case "welcome.hello";
       // Need to get the caretaker name
-	  $userid = $update['originalRequest']['data']['user']['userId'];
+      $userid = $update['originalRequest']['data']['user']['userId'];
 
-	  $rows = $_DATABASE->query("SELECT `firstname` FROM `caretaker` WHERE `userId` LIKE ? LIMIT 1",
+      $rows = $_DATABASE->query("SELECT `firstname` FROM `caretaker` WHERE `userId` LIKE ? LIMIT 1",
         array($userid));
 
-	  $name = $rows[0]["firstname"];
+      $name = $rows[0]["firstname"];
 
       sendMessage(array(
         "source" => $update["result"]["source"],
-        "speech" => "Hi, ".$name.", I'm miss Anna. Who are we helping today?",
-        "displayText" => "Hi ".$name.", I'm miss Anna. Who are we helping today?",
+        "speech" => "Hi, " . $name . ", I'm miss Anna. Who are we helping today?",
+        "displayText" => "Hi " . $name . ", I'm miss Anna. Who are we helping today?",
         "contextOut" => array()
       ));
       break;
@@ -45,24 +45,24 @@ function processMessage($update)
 
       sendMessage(array(
         "source" => $update["result"]["source"],
-        "speech" => "Ok, your note. ".$note." for ".$patient." has been saved.",
-        "displayText" => "Ok, your note: '".$note."' for ".$patient." has been saved.",
+        "speech" => "Ok, your note. " . $note . " for " . $patient . " has been saved.",
+        "displayText" => "Ok, your note: '" . $note . "' for " . $patient . " has been saved.",
         "contextOut" => array()
       ));
       break;
     case "ask.notes":
       $count = 1;
-      if(!empty($update['result']['parameters']['number'])) {
+      if (!empty($update['result']['parameters']['number'])) {
         $count = $update['result']['parameters']['number'];
       }
 
       $rows = $_DATABASE->query("SELECT * FROM note WHERE IdPatient = ? ORDER BY timestamp DESC LIMIT ?",
         array(1, $count));
 
-      if($count > 1) {
+      if ($count > 1) {
         $speech = "";
         foreach (range(0, --$count) as $i) {
-          $speech = $speech." Note ".++$i.". ".$rows[--$i]["data"].".";
+          $speech = $speech . " Note " . ++$i . ". " . $rows[--$i]["data"] . ".";
         }
         sendMessage(array(
           "source" => $update["result"]["source"],
@@ -72,7 +72,7 @@ function processMessage($update)
         ));
       } else {
         $note = "Sorry, no notes were found";
-        if(!empty($rows[0])) {
+        if (!empty($rows[0])) {
           $note = $rows[0]["data"];
         }
         sendMessage(array(
