@@ -29,23 +29,21 @@ function processMessage($update)
             $name = $rows[0]["firstname"];
 
             $simple = array(
-                "textToSpeech" => "Response you will hear.",
-                "displayText" => "Response you will see."
+                "textToSpeech" => "Hi, " . $name . ", I'm miss Anna. Who are we helping today?",
+                "displayText" => "Hi " . $name . ", I'm miss Anna. Who are we helping today?"
             );
 
             $response = array([
                 "platform" => "ACTIONS_ON_GOOGLE",
-                "simpleResponses" => array("simpleResponses" => [$simple])]
+                "simpleResponses" => array("simpleResponses" => [array(
+                    "textToSpeech" => "Hi, " . $name . ", I'm miss Anna. Who are we helping today?",
+                    "displayText" => "Hi " . $name . ", I'm miss Anna. Who are we helping today?"
+                )])]
 
             );
 
             sendMessage(array(
                 "fulfillmentMessages" => $response
-
-                //"source" => $update["queryResult"]["source"],
-                //"speech" => "Hi, " . $name . ", I'm miss Anna. Who are we helping today?",
-                //"displayText" => "Hi " . $name . ", I'm miss Anna. Who are we helping today?",
-                //"contextOut" => array()
             ));
             break;
 
