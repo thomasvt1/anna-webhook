@@ -21,7 +21,7 @@ function processMessage($update)
     switch ($update["queryResult"]["action"]) {
         case "welcome.hello";
             // Need to get the caretaker name
-            $userid = $update['originalRequest']['data']['user']['userId'];
+            $userid = $update['originalDetectIntentRequest']['payload']['user']['userId'];
 
             $rows = $_DATABASE->query("SELECT `firstname` FROM `caretaker` WHERE `userId` LIKE ? LIMIT 1",
                 array($userid));
