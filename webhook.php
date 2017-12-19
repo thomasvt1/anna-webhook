@@ -34,8 +34,10 @@ function processMessage($update)
                     "simpleResponses" => array("simpleResponses" => [array(
                         "textToSpeech" => "Hi, " . $name . ", I'm miss Anna. Who are we helping today?",
                         "displayText" => "Hi " . $name . ", I'm miss Anna. Who are we helping today?"
-                    )])]
-                )));
+                    )])],
+                ),
+                "data" => array("google" => array("expect_user_response"=> false))
+                ));
             break;
 
         case "make.note";
