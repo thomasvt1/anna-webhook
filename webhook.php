@@ -40,8 +40,8 @@ function processMessage($update)
 
         case "make.note";
             // Need to write note to the database, and send the caretaker a confirmation or fail
-            $note = $update['result']['parameters']['note'];
-            $patient = $update['result']['parameters']['patient'];
+            $note = $update['queryResult']['parameters']['note'];
+            $patient = $update['queryResult']['parameters']['patient'];
 
             $userid = $update['originalRequest']['data']['user']['userId'];
 
@@ -65,8 +65,8 @@ function processMessage($update)
 
         case "ask.notes":
             $count = 1;
-            if (!empty($update['result']['parameters']['number'])) {
-                $count = $update['result']['parameters']['number'];
+            if (!empty($update['queryResult']['parameters']['number'])) {
+                $count = $update['queryResult']['parameters']['number'];
             }
 
             $rows = $_DATABASE->query("SELECT * FROM note WHERE IdPatient = ? ORDER BY timestamp DESC LIMIT ?",
