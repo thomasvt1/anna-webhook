@@ -28,12 +28,33 @@ function processMessage($update)
 
             $name = $rows[0]["firstname"];
 
+            $debug = "{
+   \"fulfillmentMessages\": [
+      {
+         \"platform\": \"ACTIONS_ON_GOOGLE\",
+         \"simpleResponses\": {
+            \"simpleResponses\": [
+               {
+                  \"textToSpeech\": \"Response you will hear.\",
+                  \"displayText\": \"Response you will see.\"
+               }
+            ]
+         }
+      }
+   ]
+}";
+
+            sendMessage($debug);
+
+            break;
+/*
             sendMessage(array(
                 "source" => $update["queryResult"]["source"],
                 "speech" => "Hi, " . $name . ", I'm miss Anna. Who are we helping today?",
                 "displayText" => "Hi " . $name . ", I'm miss Anna. Who are we helping today?",
                 "contextOut" => array()
             ));
+*/
             break;
         case "make.note";
             // Need to write note to the database, and send the caretaker a confirmation or fail
