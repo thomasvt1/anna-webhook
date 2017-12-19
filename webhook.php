@@ -36,7 +36,7 @@ function processMessage($update)
                         "displayText" => "Hi " . $name . ", I'm miss Anna. Who are we helping today?"
                     )])],
                 ),
-                "data" => array("google" => array("expect_user_response"=> false))
+                "data" => array("google" => array("expectUserResponse"=> false))
                 ));
             break;
 
