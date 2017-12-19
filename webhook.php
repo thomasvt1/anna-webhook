@@ -28,11 +28,6 @@ function processMessage($update)
 
             $name = $rows[0]["firstname"];
 
-            $simple = array(
-                "textToSpeech" => "Hi, " . $name . ", I'm miss Anna. Who are we helping today?",
-                "displayText" => "Hi " . $name . ", I'm miss Anna. Who are we helping today?"
-            );
-
             $response = array([
                 "platform" => "ACTIONS_ON_GOOGLE",
                 "simpleResponses" => array("simpleResponses" => [array(
