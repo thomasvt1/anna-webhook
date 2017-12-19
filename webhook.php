@@ -35,7 +35,7 @@ function processMessage($update)
 
             $response = array([
                 "platform" => "ACTIONS_ON_GOOGLE",
-                "simpleResponses" => array("simpleResponses" => $simple)]
+                "simpleResponses" => array("simpleResponses" => [$simple])]
 
             );
 
