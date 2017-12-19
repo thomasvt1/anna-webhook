@@ -22,9 +22,7 @@ function processMessage($update)
     // Switch the action
     switch ($update["queryResult"]["action"]) {
         case "welcome.hello";
-            // Need to get the caretaker name
-            //$userid = $update['originalDetectIntentRequest']['payload']['user']['userId'];
-
+            //Say personalized hello and check if user in DB
             $rows = $_DATABASE->query("SELECT `firstname` FROM `caretaker` WHERE `userId` LIKE ? LIMIT 1",
                 array($userid));
 
@@ -44,8 +42,6 @@ function processMessage($update)
             // Need to write note to the database, and send the caretaker a confirmation or fail
             $note = $update['queryResult']['parameters']['note'];
             $patient = $update['queryResult']['parameters']['patient'];
-
-            //$userid = $update['originalDetectIntentRequest']['payload']['user']['userId'];
 
             $rows = $_DATABASE->query("SELECT `IdCaretaker` FROM `caretaker` WHERE `userId` LIKE ? LIMIT 1",
                 array($userid));
