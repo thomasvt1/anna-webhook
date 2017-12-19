@@ -39,9 +39,16 @@ function processMessage($update)
       // Need to write note to the database, and send the caretaker a confirmation or fail
       $note = $update['result']['parameters']['note'];
       $patient = $update['result']['parameters']['patient'];
+	  
+	  $userid = $update['originalRequest']['data']['user']['userId'];
+
+	  $rows = $_DATABASE->query("SELECT `IdCaretaker` FROM `caretaker` WHERE `userId` LIKE ? LIMIT 1",
+        array($userid));
+		
+	  $caretaker = $rows[0]["IdCaretaker"];
 
       $_DATABASE->query("INSERT INTO note(IdCaretaker, IdPatient, data, timestamp) VALUES(?, ?, ?, CURRENT_TIMESTAMP)",
-        array(1, 1, json_encode($note)));
+        array($caretaker, 1, json_encode($note)));
 
       sendMessage(array(
         "source" => $update["result"]["source"],
