@@ -29,7 +29,6 @@ function processMessage($update)
             $name = $rows[0]["firstname"];
 
             sendMessage(array(
-                "expectUserResponse" => false,
                 "fulfillmentMessages" => array([
                     "platform" => "ACTIONS_ON_GOOGLE",
                     "simpleResponses" => array("simpleResponses" => [array(
