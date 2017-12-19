@@ -28,24 +28,6 @@ function processMessage($update)
 
             $name = $rows[0]["firstname"];
 
-            echo "{
-   \"fulfillmentMessages\": [
-      {
-         \"platform\": \"ACTIONS_ON_GOOGLE\",
-         \"simpleResponses\": {
-            \"simpleResponses\": [
-               {
-                  \"textToSpeech\": \"Response you will hear.\",
-                  \"displayText\": \"Response you will see.\"
-               }
-            ]
-         }
-      }
-   ]
-}
-";
-            return;
-
             $simple = array(
                 "textToSpeech" => "Response you will hear.",
                 "displayText" => "Response you will see."
