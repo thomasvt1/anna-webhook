@@ -35,9 +35,7 @@ function processMessage($update)
                         "textToSpeech" => "Hi, " . $name . ", I'm miss Anna. Who are we helping today?",
                         "displayText" => "Hi " . $name . ", I'm miss Anna. Who are we helping today?"
                     )])],
-                ),
-                "data" => array("google" => array("expectUserResponse"=> false))
-                ));
+                )));
             break;
 
         case "make.note";
