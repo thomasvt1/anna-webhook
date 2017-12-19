@@ -18,7 +18,7 @@ function processMessage($update)
     global $_DATABASE;
 
     // Switch the action
-    switch ($update["result"]["action"]) {
+    switch ($update["queryResult"]["action"]) {
         case "welcome.hello";
             // Need to get the caretaker name
             $userid = $update['originalRequest']['data']['user']['userId'];
@@ -29,7 +29,7 @@ function processMessage($update)
             $name = $rows[0]["firstname"];
 
             sendMessage(array(
-                "source" => $update["result"]["source"],
+                "source" => $update["queryResult"]["source"],
                 "speech" => "Hi, " . $name . ", I'm miss Anna. Who are we helping today?",
                 "displayText" => "Hi " . $name . ", I'm miss Anna. Who are we helping today?",
                 "contextOut" => array()
@@ -51,7 +51,7 @@ function processMessage($update)
                 array($caretaker, 1, json_encode($note)));
 
             sendMessage(array(
-                "source" => $update["result"]["source"],
+                "source" => $update["queryResult"]["source"],
                 "speech" => "Ok, your note. " . $note . " for " . $patient . " has been saved.",
                 "displayText" => "Ok, your note: '" . $note . "' for " . $patient . " has been saved.",
                 "contextOut" => array()
@@ -72,7 +72,7 @@ function processMessage($update)
                     $speech = $speech . " Note " . ++$i . ". " . $rows[--$i]["data"] . ".";
                 }
                 sendMessage(array(
-                    "source" => $update["result"]["source"],
+                    "source" => $update["queryResult"]["source"],
                     "speech" => $speech,
                     "displayText" => $speech,
                     "contextOut" => array()
@@ -83,7 +83,7 @@ function processMessage($update)
                     $note = $rows[0]["data"];
                 }
                 sendMessage(array(
-                    "source" => $update["result"]["source"],
+                    "source" => $update["queryResult"]["source"],
                     "speech" => $note,
                     "displayText" => $note,
                     "contextOut" => array()
@@ -115,7 +115,7 @@ $result = ob_get_clean();
 fwrite($myFile, $result);
 fclose($myFile);
 
-if (isset($update["result"]["action"])) {
+if (isset($update["queryResult"]["action"])) {
     processMessage($update);
 }
 
