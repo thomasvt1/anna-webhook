@@ -27,7 +27,7 @@ function processMessage($update)
                 array($userid));
 
             $name = $rows[0]["firstname"];
-            
+
             sendMessage(array(
                 "fulfillmentMessages" => array([
                     "platform" => "ACTIONS_ON_GOOGLE",
@@ -54,11 +54,13 @@ function processMessage($update)
                 array($caretaker, 1, json_encode($note)));
 
             sendMessage(array(
-                "source" => $update["queryResult"]["source"],
-                "speech" => "Ok, your note. " . $note . " for " . $patient . " has been saved.",
-                "displayText" => "Ok, your note: '" . $note . "' for " . $patient . " has been saved.",
-                "contextOut" => array()
-            ));
+                "fulfillmentMessages" => array([
+                    "platform" => "ACTIONS_ON_GOOGLE",
+                    "simpleResponses" => array("simpleResponses" => [array(
+                        "textToSpeech" => "Ok, your note. " . $note . " for " . $patient . " has been saved.",
+                        "displayText" => "Ok, your note: '" . $note . "' for " . $patient . " has been saved."
+                    )])]
+                )));
             break;
 
         case "ask.notes":
