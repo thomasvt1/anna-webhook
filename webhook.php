@@ -17,11 +17,13 @@ function processMessage($update)
 {
     global $_DATABASE;
 
+    $userid = $update['originalDetectIntentRequest']['payload']['user']['userId'];
+
     // Switch the action
     switch ($update["queryResult"]["action"]) {
         case "welcome.hello";
             // Need to get the caretaker name
-            $userid = $update['originalDetectIntentRequest']['payload']['user']['userId'];
+            //$userid = $update['originalDetectIntentRequest']['payload']['user']['userId'];
 
             $rows = $_DATABASE->query("SELECT `firstname` FROM `caretaker` WHERE `userId` LIKE ? LIMIT 1",
                 array($userid));
@@ -43,7 +45,7 @@ function processMessage($update)
             $note = $update['queryResult']['parameters']['note'];
             $patient = $update['queryResult']['parameters']['patient'];
 
-            $userid = $update['originalRequest']['data']['user']['userId'];
+            //$userid = $update['originalDetectIntentRequest']['payload']['user']['userId'];
 
             $rows = $_DATABASE->query("SELECT `IdCaretaker` FROM `caretaker` WHERE `userId` LIKE ? LIMIT 1",
                 array($userid));
