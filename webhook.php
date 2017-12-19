@@ -110,7 +110,7 @@ $update = json_decode($update_response, true);
 // Open debug file, to write the request to
 $myFile = fopen("debug.txt", "w") or die("Unable to open file!");
 ob_start();
-var_dump($update);
+var_dump($update_response);
 $result = ob_get_clean();
 fwrite($myFile, $result);
 fclose($myFile);
