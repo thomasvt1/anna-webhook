@@ -28,14 +28,20 @@ function processMessage($update)
 
             $name = $rows[0]["firstname"];
 
-            $response = array(
-                "platform" => "ACTIONS_ON_GOOGLE"
+            $simple = array(
+                "textToSpeech" => "Response you will hear.",
+                "displayText" => "Response you will see."
+            );
 
+            $response = array(
+                "platform" => "ACTIONS_ON_GOOGLE",
+                "simpleResponses" => array("simpleResponses" => $simple)
 
             );
 
             sendMessage(array(
                 "fulfillmentMessages" => $response
+
                 //"source" => $update["queryResult"]["source"],
                 //"speech" => "Hi, " . $name . ", I'm miss Anna. Who are we helping today?",
                 //"displayText" => "Hi " . $name . ", I'm miss Anna. Who are we helping today?",
