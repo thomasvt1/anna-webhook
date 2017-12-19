@@ -38,8 +38,13 @@ function processMessage($update)
             );
 
             sendMessage(array(
-                "fulfillmentMessages" => $response
-            ));
+                "fulfillmentMessages" => array([
+                    "platform" => "ACTIONS_ON_GOOGLE",
+                    "simpleResponses" => array("simpleResponses" => [array(
+                        "textToSpeech" => "Hi, " . $name . ", I'm miss Anna. Who are we helping today?",
+                        "displayText" => "Hi " . $name . ", I'm miss Anna. Who are we helping today?"
+                    )])]
+                )));
             break;
 
         case "make.note";
