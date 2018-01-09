@@ -104,6 +104,15 @@ function processMessage($update)
                 $value = $update['queryResult']['parameters']['number'];
             }
 
+            sendMessage(array(
+                "fulfillmentMessages" => array([
+                    "platform" => "ACTIONS_ON_GOOGLE",
+                    "simpleResponses" => array("simpleResponses" => [array(
+                        "textToSpeech" => $value,
+                        "displayText" => $value
+                    )])]
+                )));
+
             // Check patient
             $patient = $_DATABASE->row("SELECT * FROM `patient` WHERE ? = ? LIMIT 1",
                 array($column, $value));
