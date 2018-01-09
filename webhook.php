@@ -19,15 +19,30 @@ function processMessage($update)
 
     $userid = $update['originalDetectIntentRequest']['payload']['user']['userId'];
 
+    $rows = $_DATABASE->query("SELECT `firstname` FROM `caretaker` WHERE `userId` LIKE ? LIMIT 1",
+        array($userid));
+
+    $name = $rows[0]["firstname"];
+
+    if ($name == null) {
+
+        //TODO: Register unknown device.
+
+        sendMessage(array(
+            "fulfillmentMessages" => array([
+                "platform" => "ACTIONS_ON_GOOGLE",
+                "simpleResponses" => array("simpleResponses" => [array(
+                    "textToSpeech" => "Sorry, your device hasn't been registered yet. Please contact your administrator.",
+                    "displayText" => "Sorry, your device hasn't been registered yet. Please contact your administrator."
+                )])],
+            )));
+        exit;
+    }
+
     // Switch the action
     switch ($update["queryResult"]["action"]) {
         case "welcome.hello";
             //Say personalized hello and check if user in DB
-            $rows = $_DATABASE->query("SELECT `firstname` FROM `caretaker` WHERE `userId` LIKE ? LIMIT 1",
-                array($userid));
-
-            $name = $rows[0]["firstname"];
-
             sendMessage(array(
                 "fulfillmentMessages" => array([
                     "platform" => "ACTIONS_ON_GOOGLE",
