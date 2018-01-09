@@ -19,9 +19,7 @@ function processMessage($update)
 
     $caretaker = $_DATABASE->row("SELECT * FROM `caretaker` WHERE `userId` LIKE ? LIMIT 1", array($update['originalDetectIntentRequest']['payload']['user']['userId']));
 
-    $name = $caretaker["firstname"];
-
-    if ($name == null) {
+    if ($caretaker["firstname"] == null) {
 
         $_DATABASE->query("INSERT INTO unknown_caretaker(userId, timestamp) VALUES(?, CURRENT_TIMESTAMP)",
           array($update['originalDetectIntentRequest']['payload']['user']['userId']));
@@ -45,8 +43,8 @@ function processMessage($update)
                 "fulfillmentMessages" => array([
                     "platform" => "ACTIONS_ON_GOOGLE",
                     "simpleResponses" => array("simpleResponses" => [array(
-                        "textToSpeech" => "Hi, " . $name . ", I'm miss Anna. Who are we helping today?",
-                        "displayText" => "Hi " . $name . ", I'm miss Anna. Who are we helping today?"
+                        "textToSpeech" => "Hi, " . $caretaker["firstname"] . ", I'm miss Anna. Who are we helping today?",
+                        "displayText" => "Hi " . $caretaker["firstname"] . ", I'm miss Anna. Who are we helping today?"
                     )])],
                 )));
             break;
