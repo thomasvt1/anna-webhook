@@ -127,22 +127,27 @@ function processMessage($update)
                     $speech = $speech . " Note " . ++$i . ". " . $rows[--$i]["data"] . ".";
                 }
                 sendMessage(array(
-                    "source" => $update["queryResult"]["source"],
-                    "speech" => $speech,
-                    "displayText" => $speech,
-                    "contextOut" => array()
-                ));
+                    "fulfillmentMessages" => array([
+                        "platform" => "ACTIONS_ON_GOOGLE",
+                        "simpleResponses" => array("simpleResponses" => [array(
+                            "textToSpeech" => $speech,
+                            "displayText" => $speech
+                        )])]
+                    )));
+                exit;
             } else {
                 $note = "Sorry, no notes were found";
                 if (!empty($rows[0])) {
                     $note = $rows[0]["data"];
                 }
                 sendMessage(array(
-                    "source" => $update["queryResult"]["source"],
-                    "speech" => $note,
-                    "displayText" => $note,
-                    "contextOut" => array()
-                ));
+                    "fulfillmentMessages" => array([
+                        "platform" => "ACTIONS_ON_GOOGLE",
+                        "simpleResponses" => array("simpleResponses" => [array(
+                            "textToSpeech" => $note,
+                            "displayText" => $note
+                        )])]
+                    )));
             }
             break;
     }
