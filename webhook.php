@@ -87,6 +87,56 @@ function processMessage($update)
                 )));
             break;
 
+        case "next.patient":
+            // Choosing a new patient number name
+            $column = null;
+            $value = null;
+            if(isset($update['queryResult']['parameters']['number'])) {
+                $column = "IdPatient";
+                $value = $update['queryResult']['parameters']['number'];
+            }
+            if(isset($update['queryResult']['parameters']['patient'])) {
+                $column = "Firstname";
+                $value = $update['queryResult']['parameters']['number'];
+            }
+            if(isset($update['queryResult']['parameters']['last-name'])) {
+                $column = "Surname";
+                $value = $update['queryResult']['parameters']['number'];
+            }
+
+            if(isset($value)) {
+                sendMessage(array(
+                    "fulfillmentMessages" => array([
+                        "platform" => "ACTIONS_ON_GOOGLE",
+                        "simpleResponses" => array("simpleResponses" => [array(
+                            "textToSpeech" => "Error, sorry!",
+                            "displayText" => "Error, sorry!"
+                        )])]
+                    )));
+            }
+
+            // Check patient
+            $patient = $_DATABASE->row("SELECT * FROM `patient` WHERE ? = ? LIMIT 1",
+                array($column, $value));
+
+            if(isset($patient['IdPatient'])) {
+                sendMessage(array(
+                    "fulfillmentMessages" => array([
+                        "platform" => "ACTIONS_ON_GOOGLE",
+                        "simpleResponses" => array("simpleResponses" => [array(
+                            "textToSpeech" => "Okay, helping " . $patient['Firstname'] . " " . $patient['Surname']. " #" . $patient['IdPatient'],
+                            "displayText" => "Okay, helping " . $patient['Firstname'] . " " . $patient['Surname'] . " #" . $patient['IdPatient']
+                        )])]
+                    )));
+            } else {
+                sendMessage(array(
+                    "followupEventInput" => array(
+                        "name" => "WRONGPATIENT",
+                        "languageCode" => "en-US"
+                    )));
+            }
+            break;
+
         case "ask.notes":
             $count = 1;
             if (!empty($update['queryResult']['parameters']['number'])) {
