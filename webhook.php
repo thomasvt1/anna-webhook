@@ -19,8 +19,7 @@ function processMessage($update)
 
     $userid = $update['originalDetectIntentRequest']['payload']['user']['userId'];
 
-    $rows = $_DATABASE->row("SELECT `firstname` FROM `caretaker` WHERE `userId` LIKE ? LIMIT 1",
-        array($userid));
+    $rows = $_DATABASE->row("SELECT `firstname` FROM `caretaker` WHERE `userId` LIKE ? LIMIT 1", array($userid));
 
     $name = $rows["firstname"];
 
