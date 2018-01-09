@@ -52,10 +52,13 @@ function processMessage($update)
                 array($caretaker, 1, json_encode($note)));
 
             sendMessage(array(
+                "followupEvent" => array(
+                    "name" => "NEXTPATIENT"
+                ),
                 "fulfillmentMessages" => array([
                     "platform" => "ACTIONS_ON_GOOGLE",
                     "simpleResponses" => array("simpleResponses" => [array(
-                        "textToSpeech" => "Ok, your note. " . $note . " for " . $patient . " has been saved.",
+                        "textToSpeech" => "Ok, your note. " . $note . ". for, " . $patient . " has been saved.",
                         "displayText" => "Ok, your note: '" . $note . "' for " . $patient . " has been saved."
                     )])]
                 )));
