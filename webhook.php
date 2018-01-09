@@ -22,8 +22,8 @@ function processMessage($update)
     $name = $caretaker["firstname"];
 
     if ($name == null) {
-
-        //TODO: Register unknown device.
+        $_DATABASE->query("INSERT INTO unknown_caretaker(userId, timestamp) VALUES(?, CURRENT_TIMESTAMP)",
+          array($update['originalDetectIntentRequest']['payload']['user']['userId']));
 
         sendMessage(array(
             "fulfillmentMessages" => array([
