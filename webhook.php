@@ -97,22 +97,11 @@ function processMessage($update)
             }
             if(isset($update['queryResult']['parameters']['patient'])) {
                 $column = "Firstname";
-                $value = $update['queryResult']['parameters']['number'];
+                $value = $update['queryResult']['parameters']['patient'];
             }
             if(isset($update['queryResult']['parameters']['last-name'])) {
                 $column = "Surname";
-                $value = $update['queryResult']['parameters']['number'];
-            }
-
-            if(isset($value)) {
-                sendMessage(array(
-                    "fulfillmentMessages" => array([
-                        "platform" => "ACTIONS_ON_GOOGLE",
-                        "simpleResponses" => array("simpleResponses" => [array(
-                            "textToSpeech" => "Error, sorry!",
-                            "displayText" => "Error, sorry!"
-                        )])]
-                    )));
+                $value = $update['queryResult']['parameters']['last-name'];
             }
 
             // Check patient
