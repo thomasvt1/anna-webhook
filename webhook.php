@@ -19,10 +19,7 @@ function processMessage($update)
 
     $caretaker = $_DATABASE->row("SELECT * FROM `caretaker` WHERE `userId` LIKE ? LIMIT 1", array($update['originalDetectIntentRequest']['payload']['user']['userId']));
 
-    $name = $caretaker["firstname"];
-
-    if ($name == null) {
-
+    if ($caretaker["firstname"] == null) {
         //TODO: Register unknown device.
 
         sendMessage(array(
@@ -40,6 +37,8 @@ function processMessage($update)
     switch ($update["queryResult"]["action"]) {
         case "welcome.hello";
             //Say personalized hello and check if user in DB
+            $name = $caretaker["firstname"];
+
             sendMessage(array(
                 "fulfillmentMessages" => array([
                     "platform" => "ACTIONS_ON_GOOGLE",
