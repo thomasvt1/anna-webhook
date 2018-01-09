@@ -67,22 +67,21 @@ function processMessage($update)
         case "make.note";
             // Need to write note to the database, and send the caretaker a confirmation or fail
             $note = $update['queryResult']['parameters']['note'];
-            $patient = $update['queryResult']['parameters']['patient'];
+            //$patient = $update['queryResult']['parameters']['patient'];
 
-            $rows = $_DATABASE->query("SELECT `IdCaretaker` FROM `caretaker` WHERE `userId` LIKE ? LIMIT 1",
-                array($caretaker["userId"]));
-
-            $caretaker = $rows[0]["IdCaretaker"];
+            $patient = $_DATABASE->row("SELECT * FROM `patient` WHERE `IdPatient` = ".intval($update['queryResult']['parameters']['number'])."
+             OR `Firstname` LIKE '".$update['queryResult']['parameters']['patient']."'
+             OR `Surname` LIKE '".$update['queryResult']['parameters']['last-name']."' LIMIT 1");
 
             $_DATABASE->query("INSERT INTO note(IdCaretaker, IdPatient, data, timestamp) VALUES(?, ?, ?, CURRENT_TIMESTAMP)",
-                array($caretaker, 1, json_encode($note)));
+                array($caretaker['IdCaretaker'], $patient['IdPatient'], json_encode($note)));
 
             sendMessage(array(
                 "fulfillmentMessages" => array([
                     "platform" => "ACTIONS_ON_GOOGLE",
                     "simpleResponses" => array("simpleResponses" => [array(
-                        "textToSpeech" => "Ok, your note. " . $note . ". for, " . $patient . " has been saved.",
-                        "displayText" => "Ok, your note: '" . $note . "' for " . $patient . " has been saved."
+                        "textToSpeech" => "Ok, your note. " . $note . ". for, " . $patient['Firstname'] . " has been saved.",
+                        "displayText" => "Ok, your note: '" . $note . "' for " . $patient['Firstname'] . " has been saved."
                     )])]
                 )));
             break;
