@@ -109,8 +109,8 @@ function processMessage($update)
                     "fulfillmentMessages" => array([
                         "platform" => "ACTIONS_ON_GOOGLE",
                         "simpleResponses" => array("simpleResponses" => [array(
-                            "textToSpeech" => "Error, sorry!",
-                            "displayText" => "Error, sorry!"
+                            "textToSpeech" => $value,
+                            "displayText" => $value
                         )])]
                     )));
             }
