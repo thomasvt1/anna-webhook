@@ -89,23 +89,9 @@ function processMessage($update)
 
         case "next.patient":
             // Choosing a new patient number name
-            $column = null;
-            $value = null;
-            if(empty($update['queryResult']['parameters']['number'])) {
-                $column = "IdPatient";
-                $value = intval($update['queryResult']['parameters']['number']);
-            }
-            else if(empty($update['queryResult']['parameters']['patient'])) {
-                $column = "Firstname";
-                $value = $update['queryResult']['parameters']['patient'];
-            }
-            else if(empty($update['queryResult']['parameters']['last-name'])) {
-                $column = "Surname";
-                $value = $update['queryResult']['parameters']['last-name'];
-            }
-
-            // Check patient
-            $patient = $_DATABASE->row("SELECT * FROM `patient` WHERE `".$column."` = '".$value."' LIMIT 1");
+            $patient = $_DATABASE->row("SELECT * FROM `patient` WHERE `IdPatient` = ".intval($update['queryResult']['parameters']['number'])."
+             OR `Firstname` LIKE '".$update['queryResult']['parameters']['patient']."'
+             OR `Surname` LIKE '".$update['queryResult']['parameters']['last-name']."' LIMIT 1");
 
             if(isset($patient['IdPatient'])) {
                 sendMessage(array(
