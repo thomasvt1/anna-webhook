@@ -105,8 +105,7 @@ function processMessage($update)
             }
 
             // Check patient
-            $patient = $_DATABASE->row("SELECT * FROM `patient` WHERE ? = ? LIMIT 1",
-                array($column, $value));
+            $patient = $_DATABASE->row("SELECT * FROM `patient` WHERE `".$column."` = '".$value."' LIMIT 1");
 
             if(isset($patient['IdPatient'])) {
                 sendMessage(array(
