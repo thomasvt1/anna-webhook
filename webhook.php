@@ -93,13 +93,13 @@ function processMessage($update)
             $value = null;
             if(isset($update['queryResult']['parameters']['number'])) {
                 $column = "IdPatient";
-                $value = $update['queryResult']['parameters']['number'];
+                $value = intval($update['queryResult']['parameters']['number']);
             }
-            if(isset($update['queryResult']['parameters']['patient'])) {
+            else if(isset($update['queryResult']['parameters']['patient'])) {
                 $column = "Firstname";
                 $value = $update['queryResult']['parameters']['patient'];
             }
-            if(isset($update['queryResult']['parameters']['last-name'])) {
+            else if(isset($update['queryResult']['parameters']['last-name'])) {
                 $column = "Surname";
                 $value = $update['queryResult']['parameters']['last-name'];
             }
