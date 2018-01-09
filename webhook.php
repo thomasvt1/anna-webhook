@@ -72,7 +72,7 @@ function processMessage($update)
             $patient = $update['queryResult']['parameters']['patient'];
 
             $rows = $_DATABASE->query("SELECT `IdCaretaker` FROM `caretaker` WHERE `userId` LIKE ? LIMIT 1",
-                array($userid));
+                array($caretaker["userId"]));
 
             $caretaker = $rows[0]["IdCaretaker"];
 
