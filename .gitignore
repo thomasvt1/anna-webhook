@@ -1,2 +1,4 @@
 .idea/*
+.floo*
+config.php
 debug.txt
