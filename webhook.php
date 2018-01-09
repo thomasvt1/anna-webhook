@@ -97,8 +97,8 @@ function processMessage($update)
                     "fulfillmentMessages" => array([
                         "platform" => "ACTIONS_ON_GOOGLE",
                         "simpleResponses" => array("simpleResponses" => [array(
-                            "textToSpeech" => "Okay, helping " . $patient['Firstname'] . " " . $patient['Surname']. " #" . $patient['IdPatient'],
-                            "displayText" => "Okay, helping " . $patient['Firstname'] . " " . $patient['Surname'] . " #" . $patient['IdPatient']
+                            "textToSpeech" => "Okay, helping " . $patient['Firstname'] . " " . $patient['Surname']. " #" . $patient['IdPatient'] . ". What can I do for you?",
+                            "displayText" => "Okay, helping " . $patient['Firstname'] . " " . $patient['Surname'] . " #" . $patient['IdPatient'] . ". What can I do for you?"
                         )])]
                     )));
                 exit;
