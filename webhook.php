@@ -117,6 +117,10 @@ function processMessage($update)
              OR `Surname` LIKE '".$update['queryResult']['parameters']['patient']."' LIMIT 1");
             if (!empty($update['queryResult']['parameters']['number'])) {
                 $count = intval($update['queryResult']['parameters']['number']);
+            } else {
+                if (strpos($update['queryResult']['queryText'], 'notes') !== false) {
+                    $count = 3;
+                }
             }
 
             $rows = $_DATABASE->query("SELECT * FROM note WHERE IdPatient = ? ORDER BY timestamp DESC LIMIT ?",
