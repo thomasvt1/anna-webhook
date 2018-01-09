@@ -117,12 +117,14 @@ function processMessage($update)
                             "displayText" => "Okay, helping " . $patient['Firstname'] . " " . $patient['Surname'] . " #" . $patient['IdPatient']
                         )])]
                     )));
+                exit;
             } else {
                 sendMessage(array(
                     "followupEventInput" => array(
                         "name" => "WRONGPATIENT",
                         "languageCode" => "en-US"
                     )));
+                exit;
             }
             break;
 
