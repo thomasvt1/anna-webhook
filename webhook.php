@@ -22,7 +22,7 @@ function processMessage($update)
     if ($caretaker["firstname"] == null) {
 
         $_DATABASE->query("INSERT INTO unknown_caretaker(userId, timestamp) VALUES(?, CURRENT_TIMESTAMP)",
-          array($update['originalDetectIntentRequest']['payload']['user']['userId']));
+            array($update['originalDetectIntentRequest']['payload']['user']['userId']));
 
         sendMessage(array(
             "fulfillmentMessages" => array([
