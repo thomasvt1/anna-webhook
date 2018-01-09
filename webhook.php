@@ -90,7 +90,9 @@ function processMessage($update)
             // Choosing a new patient number name
             $patient = $_DATABASE->row("SELECT * FROM `patient` WHERE `IdPatient` = ".intval($update['queryResult']['parameters']['number'])."
              OR `Firstname` LIKE '".$update['queryResult']['parameters']['patient']."'
-             OR `Surname` LIKE '".$update['queryResult']['parameters']['last-name']."' LIMIT 1");
+             OR `Firstname` LIKE '".$update['queryResult']['queryText']."'
+             OR `Surname` LIKE '".$update['queryResult']['parameters']['last-name']."'
+             OR `Surname` LIKE '".$update['queryResult']['queryText']."' LIMIT 1");
 
             if(isset($patient['IdPatient'])) {
                 sendMessage(array(
