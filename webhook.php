@@ -40,8 +40,9 @@ function processMessage($update)
 
         case "test.hook";
             sendMessage(array(
-                "FollowupIntentInfo" => array(
-                    "followup_intent_name" => "NEXTPATIENT"
+                "followupEvent" => array(
+                    "name" => "NEXTPATIENT",
+                    "data" => array()
                 ),
                 "fulfillmentMessages" => array([
                     "platform" => "ACTIONS_ON_GOOGLE",
