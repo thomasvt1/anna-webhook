@@ -38,6 +38,20 @@ function processMessage($update)
                 )));
             break;
 
+        case "test.hook";
+            sendMessage(array(
+                "followupEvent" => array(
+                    "name" => "NEXTPATIENT"
+                ),
+                "fulfillmentMessages" => array([
+                    "platform" => "ACTIONS_ON_GOOGLE",
+                    "simpleResponses" => array("simpleResponses" => [array(
+                        "textToSpeech" => "Api request has been solved",
+                        "displayText" => "Api request has been solved"
+                    )])]
+                )));
+            break;
+
         case "make.note";
             // Need to write note to the database, and send the caretaker a confirmation or fail
             $note = $update['queryResult']['parameters']['note'];
@@ -52,9 +66,6 @@ function processMessage($update)
                 array($caretaker, 1, json_encode($note)));
 
             sendMessage(array(
-                "followupEvent" => array(
-                    "name" => "NEXTPATIENT"
-                ),
                 "fulfillmentMessages" => array([
                     "platform" => "ACTIONS_ON_GOOGLE",
                     "simpleResponses" => array("simpleResponses" => [array(
