@@ -112,12 +112,15 @@ function processMessage($update)
 
         case "ask.notes":
             $count = 1;
+            $patient = $_DATABASE->row("SELECT * FROM `patient` WHERE `IdPatient` = ".intval($update['queryResult']['parameters']['patient'])."
+             OR `Firstname` LIKE '".$update['queryResult']['parameters']['patient']."'
+             OR `Surname` LIKE '".$update['queryResult']['parameters']['patient']."' LIMIT 1");
             if (!empty($update['queryResult']['parameters']['number'])) {
-                $count = $update['queryResult']['parameters']['number'];
+                $count = intval($update['queryResult']['parameters']['number']);
             }
 
             $rows = $_DATABASE->query("SELECT * FROM note WHERE IdPatient = ? ORDER BY timestamp DESC LIMIT ?",
-                array(1, $count));
+                array($patient['IdPatient'], $count));
 
             if ($count > 1) {
                 $speech = "";
