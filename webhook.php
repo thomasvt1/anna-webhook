@@ -54,7 +54,7 @@ function processMessage($update)
         case "test.hook";
             sendMessage(array(
                 "followupEventInput" => array(
-                    "name" => "NEXTPATIENT",
+                    "name" => "WRONGPATIENT",
                     "languageCode" => "en-US"
                 ),
                 "fulfillmentMessages" => array([
