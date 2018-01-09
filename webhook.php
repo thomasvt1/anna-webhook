@@ -91,15 +91,15 @@ function processMessage($update)
             // Choosing a new patient number name
             $column = null;
             $value = null;
-            if(isset($update['queryResult']['parameters']['number'])) {
+            if(empty($update['queryResult']['parameters']['number'])) {
                 $column = "IdPatient";
                 $value = intval($update['queryResult']['parameters']['number']);
             }
-            else if(isset($update['queryResult']['parameters']['patient'])) {
+            else if(empty($update['queryResult']['parameters']['patient'])) {
                 $column = "Firstname";
                 $value = $update['queryResult']['parameters']['patient'];
             }
-            else if(isset($update['queryResult']['parameters']['last-name'])) {
+            else if(empty($update['queryResult']['parameters']['last-name'])) {
                 $column = "Surname";
                 $value = $update['queryResult']['parameters']['last-name'];
             }
