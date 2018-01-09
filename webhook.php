@@ -67,11 +67,9 @@ function processMessage($update)
         case "make.note";
             // Need to write note to the database, and send the caretaker a confirmation or fail
             $note = $update['queryResult']['parameters']['note'];
-            //$patient = $update['queryResult']['parameters']['patient'];
-
-            $patient = $_DATABASE->row("SELECT * FROM `patient` WHERE `IdPatient` = ".intval($update['queryResult']['parameters']['number'])."
+            $patient = $_DATABASE->row("SELECT * FROM `patient` WHERE `IdPatient` = ".intval($update['queryResult']['parameters']['patient'])."
              OR `Firstname` LIKE '".$update['queryResult']['parameters']['patient']."'
-             OR `Surname` LIKE '".$update['queryResult']['parameters']['last-name']."' LIMIT 1");
+             OR `Surname` LIKE '".$update['queryResult']['parameters']['patient']."' LIMIT 1");
 
             $_DATABASE->query("INSERT INTO note(IdCaretaker, IdPatient, data, timestamp) VALUES(?, ?, ?, CURRENT_TIMESTAMP)",
                 array($caretaker['IdCaretaker'], $patient['IdPatient'], json_encode($note)));
@@ -88,9 +86,9 @@ function processMessage($update)
 
         case "next.patient":
             // Choosing a new patient number name
-            $patient = $_DATABASE->row("SELECT * FROM `patient` WHERE `IdPatient` = ".intval($update['queryResult']['parameters']['input'])."
-             OR `Firstname` LIKE '".$update['queryResult']['parameters']['input']."'
-             OR `Surname` LIKE '".$update['queryResult']['parameters']['input']."' LIMIT 1");
+            $patient = $_DATABASE->row("SELECT * FROM `patient` WHERE `IdPatient` = ".intval($update['queryResult']['parameters']['patient'])."
+             OR `Firstname` LIKE '".$update['queryResult']['parameters']['patient']."'
+             OR `Surname` LIKE '".$update['queryResult']['parameters']['patient']."' LIMIT 1");
 
             if(isset($patient['IdPatient'])) {
                 sendMessage(array(
